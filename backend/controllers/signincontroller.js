@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const User = require('../schema/users');
+const User = require('../schema/User');
 
 module.exports.signin_post = async (req, res) => {
   try {

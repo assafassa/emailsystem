@@ -1,19 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const User = require('../schema/users');
+const User = require('../schema/User');
 
 module.exports.signup_post = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const {  email, password } = req.body;
 
     // if the user already exists
-    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    const existingUser = await User.findOne( { email } );
     if (existingUser) {
-      return res.status(400).json({ result: 'Username or email already exists.' });
+      return res.status(400).json({ result: 'email already exists.' });
     }
 
     // Creating a new user
-    const newUser = new User({ username, email, password });
+    const newUser = new User({ email, password });
     await newUser.save();
 
     res.status(201).json({ result: 'Sign up successful' });

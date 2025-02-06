@@ -4,14 +4,53 @@ function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Login:', { email, password });
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Signin successful:', data);
+        // Handle successful signup (e.g., navigate to another page)
+      } else {
+        console.error('Signin failed:', data.result);
+        // Handle failure (e.g., show error message)
+      }
+    } catch (error) {
+      console.error('Error during signin:', error);
+      // Handle network or other errors
+    }
   };
 
-  const handleSignup = () => {
-    console.log('Signup:', { email, password });
-  };
+  const handleSignup = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Signup successful:', data);
+        // Handle successful signup (e.g., navigate to another page)
+      } else {
+        console.error('Signup failed:', data.result);
+        // Handle failure (e.g., show error message)
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      // Handle network or other errors
+    }
+  };
   return (
     <div style={styles.container}>
       <div style={styles.square}>
