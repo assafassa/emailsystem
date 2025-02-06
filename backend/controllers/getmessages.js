@@ -14,7 +14,7 @@ module.exports.get_messages = async (req, res) => {
         { fromAddress: email }, 
         { toAddress: email, draft: false }
       ]
-    });
+    }).sort({ createdAt: -1 }); ;
 
     if (messages.length === 0) {
       return res.status(404).json({ result: 'No messages found' });

@@ -17,7 +17,7 @@ const io = setupSocket(server);
 // Connect to MongoDB and start server if successful
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
-        app.listen(8000, () => {
+        server.listen(8000, () => {
             console.log('Server is running on port 8000');
         });
     })
@@ -34,13 +34,14 @@ app.post('/signup' ,SignupController.signup_post)
 app.post('/signin' ,SigninController.signin_post)
 app.post('/postmessage', (req, res) => {
     const { fromAddress, toAddress, body } = req.body;
-
+    
     //add message to mongoDB
     PostMessageController.post_message(req, res);
 
+    
     // Send the triger to the recipient if they are connected
-    sendNotificationToUser(toAddress, { fromAddress, body }, io);
+    sendNotificationToUser(toAddress, io);
 
-    res.status(200).json({ message: 'Message posted and notification sent' });
+    
 });
 app.get('/getmessages', GetMessageController.get_messages);

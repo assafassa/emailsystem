@@ -12,6 +12,7 @@ function Home() {
   const { userEmail, clearUser } = useUser();
   const  [sortby,setSortBy]=useState("Inbox")
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [socket,setSocket]=useState()
   const handleSendMessage = async (message) => {
     const { toAddress, subject, body,draft} = message;
   
@@ -37,7 +38,7 @@ function Home() {
       if (response.ok) {
         console.log('Message sent successfully:', data);
         // Optionally handle success (e.g., show confirmation message)
-        setMessages([newMessage,...messages])
+        fetchMessages()
       } else {
         console.error('Sending message failed:', data.result);
         // Optionally handle failure (e.g., show error message)
@@ -51,50 +52,67 @@ function Home() {
 
 
   const [messages,setMessages] = useState([
-    {
-      "_id": "67a49f9c1394c557cdd1e726",
-      "title": "Meeting Reminder",
-      "body": "This is a reminder about the meeting scheduled for tomorrow at 10 AM.",
-      "fromAddress": "assaf@gmail.com",
-      "toAddress": "jane.smith@example.com",
-      "createdAt": "2025-02-06T08:30:00Z",
-      "draft": "false"
-    }]
+    ]
   );
 
-  const [currentMessage,setCurrentMessage]=useState("67a49f9c1394c557cdd1e726")
+  const [currentMessage,setCurrentMessage]=useState(null)
+  useEffect(() => {
+    if (messages.length!=0){
+      setCurrentMessage(messages[0]._id)
+    }
+  
+    
+  }, [messages])
+  
 
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/getmessages?email=${userEmail}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
+      const data = await response.json();
+      if (response.ok) {
+        setMessages(data.messages);
+      } else {
+        console.error('Fetching messages failed:', data.result);
+        // Handle failure (e.g., show error message)
+      }
+    } catch (error) {
+      console.error('Error during fetching messages:', error);
+      // Handle network or other errors
+    }
+    
+  };
   
   useEffect(() => {
-    const fetchMessages = async () => {
-      if (!userEmail) {
-        navigate('/'); // Redirect to login page if no email
-      } else {
-        try {
-          const response = await fetch(`http://localhost:8000/getmessages?email=${userEmail}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+    if (!userEmail) {
+      navigate('/'); 
+    }else {
+      //retriving data
+      fetchMessages()
+      // Initialize the socket connection
+      const newSocket = io('http://localhost:8000'); // URL to your server
+      setSocket(newSocket);
 
-          const data = await response.json();
-          if (response.ok) {
-            setMessages(data.messages);
-          } else {
-            console.error('Fetching messages failed:', data.result);
-            // Handle failure (e.g., show error message)
-          }
-        } catch (error) {
-          console.error('Error during fetching messages:', error);
-          // Handle network or other errors
-        }
-      }
-    };
+      // When a new message arrives, update the state
+      newSocket.on('newMessageReceived', (data) => { // Event name matches backend
+        fetchMessages(); // Trigger data retrieval on new message
+      });
 
-    fetchMessages();
-  }, [userEmail, navigate]);
+      // Emit user login event when the component mounts
+      newSocket.emit('user_login', userEmail);
+    
+      // Cleanup on unmount
+      return () => {
+          newSocket.disconnect();
+      };
+
+    }
+  }, [userEmail]);
   
   return (
     <div>
@@ -108,10 +126,11 @@ function Home() {
         sortby={sortby}
         userEmail={userEmail}
         />
-        <MessageView
+        {currentMessage&&(<MessageView
         message={messages.filter((message)=>message._id==currentMessage)[0]}
         
-        />
+        />)}
+        
         {isModalOpen&&(<NewMessageModal isModalOpen={isModalOpen}  setIsOpen={setIsModalOpen} sendMessage={handleSendMessage } />)}
         
       </div>

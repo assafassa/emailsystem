@@ -1,11 +1,11 @@
 import React from 'react';
 
 function MessageView({ message }) {
-    const {fromAdress, title, createdAt , body}=message
+    const {fromAddress, title, createdAt , body}=message
   return (
     <div style={styles.container}>
       
-      <p style={styles.sender}>From: {fromAdress}</p>
+      <p style={styles.sender}>From: {fromAddress}</p>
       <h2 style={styles.title}>{title}</h2>
       <p style={styles.date}>{createdAt}</p>
       <div style={styles.messageBox}>
