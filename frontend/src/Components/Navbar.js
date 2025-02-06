@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../UserContext';
 
-function Navbar() {
+function Navbar({setIsModalOpen}) {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const { clearUser,userEmail } = useUser();
@@ -34,7 +34,7 @@ function Navbar() {
         <button onClick={handleSearch} style={styles.searchButton}>Search</button>
       </div>
 
-      <button onClick={() => navigate('/new-email')} style={styles.navButton}>New Email</button>
+      <button onClick={() => setIsModalOpen(true)} style={styles.navButton}>New Email</button>
       <div>{userEmail}</div>
       <button onClick={handleLogout} style={styles.navButton}>Logout</button>
     </nav>

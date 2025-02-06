@@ -4,10 +4,31 @@ import { useUser } from './UserContext';
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar'
 import MessageView from './Components/MessageView';
+import NewMessageModal from './Modals/NewMassegeModal';
 
 function Home() {
   const navigate = useNavigate();
   const { userEmail, clearUser } = useUser();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const handleSendMessage = (message) => {
+    // Handle sending the message here
+    console.log(message);
+  };
+
+//   return (
+//     <div>
+//       <button onClick={() => setIsModalOpen(true)}>Compose New Message</button>
+      
+//       <NewMessageModal
+//         isOpen={isModalOpen}
+//         setIsOpen={setIsModalOpen}
+//         sendMessage={handleSendMessage}
+//       />
+//     </div>
+//   );
+// }
   const [messages,setMessages] = useState([
     {
       "_id": "67a49f9c1394c557cdd1e726",
@@ -130,7 +151,7 @@ function Home() {
   
   return (
     <div>
-      <Navbar/>
+      <Navbar setIsModalOpen={setIsModalOpen}/>
       <div style={{display: 'flex', flexDirection: 'row',}}>
         <Sidebar messages={messages}
         setCurrentMessage={setCurrentMessage}
@@ -140,6 +161,7 @@ function Home() {
         message={messages.filter((message)=>message._id==currentMessage)[0]}
         
         />
+        <NewMessageModal isModalOpen={isModalOpen}  setIsOpen={setIsModalOpen} sendMessage={handleSendMessage } />
       </div>
     </div>
   );
