@@ -9,7 +9,7 @@ function Sidebar({messages,setCurrentMessage,currentMessage,sortby,userEmail}) {
     if (sortby == "Inbox") {
       return message.toAddress == userEmail;
     } else if (sortby == "Outbox") {
-      return message.fromAddress == userEmail ;
+      return message.fromAddress == userEmail && message.draft == false ;
     } else if (sortby == "Draft") {
       return message.fromAddress == userEmail && message.draft == true;
     }
