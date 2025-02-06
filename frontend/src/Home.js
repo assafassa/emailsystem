@@ -11,24 +11,44 @@ function Home() {
   const { userEmail, clearUser } = useUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleSendMessage = async (message) => {
+    const { toAddress, subject, body} = message;
   
-  const handleSendMessage = (message) => {
-    // Handle sending the message here
-    console.log(message);
+    const newMessage = {
+      title: subject,
+      body: body,
+      fromAddress: userEmail,
+      toAddress: toAddress,
+      draft:  false, // Set draft to false if not provided
+    };
+  
+    try {
+      const response = await fetch('http://localhost:8000/postmessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newMessage),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log('Message sent successfully:', data);
+        // Optionally handle success (e.g., show confirmation message)
+        setMessages([newMessage,...messages])
+      } else {
+        console.error('Sending message failed:', data.result);
+        // Optionally handle failure (e.g., show error message)
+      }
+    } catch (error) {
+      console.error('Error during sending message:', error);
+      // Handle network or other errors
+    }
   };
+  
 
-//   return (
-//     <div>
-//       <button onClick={() => setIsModalOpen(true)}>Compose New Message</button>
-      
-//       <NewMessageModal
-//         isOpen={isModalOpen}
-//         setIsOpen={setIsModalOpen}
-//         sendMessage={handleSendMessage}
-//       />
-//     </div>
-//   );
-// }
+
   const [messages,setMessages] = useState([
     {
       "_id": "67a49f9c1394c557cdd1e726",
@@ -161,7 +181,8 @@ function Home() {
         message={messages.filter((message)=>message._id==currentMessage)[0]}
         
         />
-        <NewMessageModal isModalOpen={isModalOpen}  setIsOpen={setIsModalOpen} sendMessage={handleSendMessage } />
+        {isModalOpen&&(<NewMessageModal isModalOpen={isModalOpen}  setIsOpen={setIsModalOpen} sendMessage={handleSendMessage } />)}
+        
       </div>
     </div>
   );

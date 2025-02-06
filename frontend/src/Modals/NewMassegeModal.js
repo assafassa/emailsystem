@@ -22,7 +22,7 @@ function NewMessageModal({ isOpen, setIsOpen, sendMessage }) {
         
         <div style={styles.header}>
             <div style={styles.buttons}>
-                <button type="submit" style={styles.sendButton}>Send</button>
+                <button type="submit" style={styles.sendButton} onClick={handleSubmit}>Send</button>
                 <button type="button" onClick={closeModal} style={styles.cancelButton}>Cancel</button>
             </div>
             <button onClick={closeModal} style={styles.closeButton}>X</button>
