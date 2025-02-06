@@ -9,17 +9,17 @@ import NewMessageModal from './Modals/NewMassegeModal';
 function Home() {
   const navigate = useNavigate();
   const { userEmail, clearUser } = useUser();
-
+  const  [sortby,setSortBy]=useState("Inbox")
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleSendMessage = async (message) => {
-    const { toAddress, subject, body} = message;
+    const { toAddress, subject, body,draft} = message;
   
     const newMessage = {
       title: subject,
       body: body,
       fromAddress: userEmail,
       toAddress: toAddress,
-      draft:  false, // Set draft to false if not provided
+      draft:  draft||false, // Set draft to false if not provided
     };
   
     try {
@@ -56,7 +56,8 @@ function Home() {
       "body": "This is a reminder about the meeting scheduled for tomorrow at 10 AM.",
       "fromAddress": "assaf@gmail.com",
       "toAddress": "jane.smith@example.com",
-      "createdAt": "2025-02-06T08:30:00Z"
+      "createdAt": "2025-02-06T08:30:00Z",
+      "draft":"true"
     },
     {
       "_id": "67a49f9e1394c557cdd1e728",
@@ -120,7 +121,7 @@ function Home() {
       "body": "This is a reminder about the meeting scheduled for tomorrow at 10 AM.",
       "fromAddress": "assaf@gmail.com",
       "toAddress": "jane.smith@example.com",
-      "createdAt": "2025-02-06T12:30:00Z"
+      "createdAt": "2025-02-06T12:30:00Z",
     },
     {
       "_id": "67a49fc91394c557cdd1e738",
@@ -135,10 +136,7 @@ function Home() {
   const [currentMessage,setCurrentMessage]=useState("67a49f9c1394c557cdd1e726")
 
 
-  const handleLogout = () => {
-    clearUser(); // Clear user data on logout
-    navigate('/'); // Navigate to the SignIn page
-  };
+  
   useEffect(() => {
     const fetchMessages = async () => {
       if (!userEmail) {
@@ -171,11 +169,15 @@ function Home() {
   
   return (
     <div>
-      <Navbar setIsModalOpen={setIsModalOpen}/>
+      <Navbar setIsModalOpen={setIsModalOpen}
+      setSortBy={setSortBy}
+      sortby={sortby}/>
       <div style={{display: 'flex', flexDirection: 'row',}}>
         <Sidebar messages={messages}
         setCurrentMessage={setCurrentMessage}
         currentMessage={currentMessage}
+        sortby={sortby}
+        userEmail={userEmail}
         />
         <MessageView
         message={messages.filter((message)=>message._id==currentMessage)[0]}

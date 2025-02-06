@@ -12,18 +12,22 @@ function NewMessageModal({ isOpen, setIsOpen, sendMessage }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendMessage({ toAddress, subject, body });
+    sendMessage({ toAddress, subject, body,draft:false });
     closeModal();
   };
-
+  const handleDraft = (e) => {
+    e.preventDefault();
+    sendMessage({ toAddress, subject, body,draft:true });
+    closeModal();
+  };
   return (
-    <div style={{ display: isOpen ? 'block' : 'none' }} style={styles.overlay}>
+    <div style={styles.overlay}>
       <div style={styles.modal}>
         
         <div style={styles.header}>
             <div style={styles.buttons}>
                 <button type="submit" style={styles.sendButton} onClick={handleSubmit}>Send</button>
-                <button type="button" onClick={closeModal} style={styles.cancelButton}>Cancel</button>
+                <button type="button" onClick={handleDraft} style={styles.cancelButton}>Cancel</button>
             </div>
             <button onClick={closeModal} style={styles.closeButton}>X</button>
           

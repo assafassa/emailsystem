@@ -1,16 +1,26 @@
 import React from 'react';
 import MessagePreview from './MessagePreview'; // Import the MessagePreview component
 
-function Sidebar({messages,setCurrentMessage,currentMessage}) {
+function Sidebar({messages,setCurrentMessage,currentMessage,sortby,userEmail}) {
   // Sample messages for the preview
   
-
+  const filteredMessages = messages.filter((message) => {
+    
+    if (sortby == "Inbox") {
+      return message.toAddress == userEmail;
+    } else if (sortby == "Outbox") {
+      return message.fromAddress == userEmail ;
+    } else if (sortby == "Draft") {
+      return message.fromAddress == userEmail && message.draft == true;
+    }
+    return true; // Default case: Show all messages if no valid sortby value
+  });
 
   return (
     <div style={styles.sidebar}>
       <div style={styles.messageContainer}>
         <ul style={styles.messageList}>
-          {messages.map((message) => (
+          {filteredMessages.map((message) => (
             <MessagePreview
               key={message._id}
               id={message._id}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../UserContext';
 
-function Navbar({setIsModalOpen}) {
+function Navbar({setIsModalOpen,setSortBy,sortby}) {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const { clearUser,userEmail } = useUser();
@@ -16,12 +16,43 @@ function Navbar({setIsModalOpen}) {
     console.log('Search query:', searchQuery);
     // Perform search or navigate to a search results page
   };
+  
 
   return (
     <nav style={styles.navbar}>
-      <button onClick={() => navigate('/inbox')} style={styles.navButton}>Inbox</button>
-      <button onClick={() => navigate('/outbox')} style={styles.navButton}>Outbox</button>
-      <button onClick={() => navigate('/draft')} style={styles.navButton}>Draft</button>
+      <button
+        onClick={() => setSortBy("Inbox")}
+        style={{
+          ...styles.navButton,
+          backgroundColor: sortby == "Inbox" ? "#294163" : "#9DB0D2",
+          color: sortby == "Inbox" ? "white" : "black",
+        }}
+      >
+        Inbox
+      </button>
+
+      <button
+        onClick={() => setSortBy("Outbox")}
+        style={{
+          ...styles.navButton,
+          backgroundColor: sortby == "Outbox" ? "#294163" : "#9DB0D2",
+          color: sortby == "Outbox" ? "white" : "black",
+        }}
+      >
+        Outbox
+      </button>
+
+      <button
+        onClick={() => setSortBy("Draft")}
+        style={{
+          ...styles.navButton,
+          backgroundColor: sortby == "Draft" ? "#294163" : "#9DB0D2",
+          color: sortby == "Draft" ? "white" : "black",
+        }}
+      >
+        Draft
+      </button>
+
 
       <div style={styles.searchContainer}>
         <input
@@ -53,13 +84,14 @@ const styles = {
     fontSize: '16px',
   },
   navButton: {
-    backgroundColor: 'transparent',
-    color: 'white',
+    color: 'black',
     border: 'none',
     fontSize: '16px',
     cursor: 'pointer',
     padding: '10px',
     margin: '0 5px',
+    borderRadius: '4px',
+    border: '1px solid #5676B1',
   },
   searchContainer: {
     display: 'flex',
