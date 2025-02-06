@@ -6,17 +6,24 @@ const UserContext = createContext();
 // Provider component to wrap around your app
 export const UserProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(null); // store user email in state
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLasttName] = useState(null); // store user email in state
 
-  const loginUser = (email) => {
-    setUserEmail(email);  // Update user email
+  const loginUser = (email,data) => {
+    setUserEmail(email);
+    const{firstName,lastName }=data
+    setFirstName(firstName)
+    setLasttName(lastName)
   };
 
   const clearUser = () => {
     setUserEmail(null);  // Clear user email (log out)
+    setFirstName(null)
+    setLasttName(null)
   };
 
   return (
-    <UserContext.Provider value={{ userEmail, loginUser, clearUser }}>
+    <UserContext.Provider value={{ userEmail, loginUser, clearUser,lastName,firstName }}>
       {children}
     </UserContext.Provider>
   );

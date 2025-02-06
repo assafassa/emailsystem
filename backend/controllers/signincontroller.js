@@ -14,9 +14,9 @@ module.exports.signin_post = async (req, res) => {
         return res.status(400).json({ result: 'Email or Password are incorrect.'}); 
     }
 
+    data={firstName:existingUser.firstName,lastName:existingUser.lastName }
 
-
-    res.status(200).json({ result: 'Sign in successful. Retrieving your data' });
+    res.status(200).json({ result: 'Sign in successful.',data});
   } catch (err) {
     console.error(err);
     res.status(500).json({ result: 'Internal server error' });

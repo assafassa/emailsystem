@@ -30,7 +30,7 @@ function SignUp() {
       if (response.ok) {
         console.log('Signup successful:', data);
         // Handle successful signup 
-        loginUser(email); // Update the context with the logged-in email
+        loginUser(email,{firstName,lastName} ); // Update the context with the logged-in email
         // Redirect to home page after successful sign-in
         window.location.href = '/home';
       } else {

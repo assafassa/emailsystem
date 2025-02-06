@@ -12,6 +12,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6, 
   },
+  firstName:{
+    type: String,
+    required: true,
+    minlength: 2,
+  },
+  lastName:{
+    type: String,
+    required: true,
+    minlength: 2,
+  }
 });
 
 const User = mongoose.model('User', userSchema);

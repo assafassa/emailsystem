@@ -9,7 +9,7 @@ import { io } from 'socket.io-client';
 
 function Home() {
   const navigate = useNavigate();
-  const { userEmail, clearUser } = useUser();
+  const { userEmail, clearUser,firstName,lastName } = useUser();
   const  [sortby,setSortBy]=useState("Inbox")
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [socket,setSocket]=useState()

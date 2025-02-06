@@ -22,7 +22,7 @@ function SignIn() {
       if (response.ok) {
         console.log('Signin successful:', data);
         // Handle successful signup (e.g., navigate to another page)
-        loginUser(email); 
+        loginUser(email,data.data); 
         
         
       } else {

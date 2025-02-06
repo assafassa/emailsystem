@@ -4,7 +4,7 @@ const User = require('../schema/User');
 
 module.exports.signup_post = async (req, res) => {
   try {
-    const {  email, password } = req.body;
+    const {  email, password,firstName,lastName } = req.body;
 
     // if the user already exists
     const existingUser = await User.findOne( { email } );
@@ -13,7 +13,7 @@ module.exports.signup_post = async (req, res) => {
     }
 
     // Creating a new user
-    const newUser = new User({ email, password });
+    const newUser = new User({ email, password ,firstName,lastName});
     await newUser.save();
 
     res.status(201).json({ result: 'Sign up successful' });
