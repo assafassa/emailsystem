@@ -12,10 +12,10 @@ function Sidebar({messages}) {
         <ul style={styles.messageList}>
           {messages.map((message) => (
             <MessagePreview
-              key={message.id}
-              subject={message.subject}
-              snippet={message.textmessage.slice(0, 30)}
-              sender={message.sender}
+              key={message._id}
+              subject={message.title}
+              snippet={message.body.slice(0, 30)}
+              sender={message.fromAddress}
             />
           ))}
         </ul>
