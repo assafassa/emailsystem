@@ -2,7 +2,7 @@ import React, { useState , useEffect} from 'react';
 import { useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 
-function App() {
+function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { loginUser,userEmail } = useUser();
@@ -36,37 +36,12 @@ function App() {
   };
   useEffect(() => {
       if (userEmail) {
-       
+        
         navigate('/home'); 
       }
     }, [userEmail]);
 
-  const handleSignup = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log('Signup successful:', data);
-        // Handle successful signup \
-        loginUser(email); // Update the context with the logged-in email
-        // Redirect to home page after successful sign-in
-        window.location.href = '/home';
-      } else {
-        console.error('Signup failed:', data.result);
-        // Handle failure (e.g., show error message)
-      }
-    } catch (error) {
-      console.error('Error during signup:', error);
-      // Handle network or other errors
-    }
-  };
+  
   return (
     <div style={styles.container}>
       <div style={styles.square}>
@@ -89,7 +64,7 @@ function App() {
         />
         <div style={{ display: 'flex', flexDirection: 'row', gap: '10px',width: '80%',paddingLeft:'25px' }}>
           <button style={styles.button} onClick={handleLogin}>Login</button>
-          <button style={styles.button} onClick={handleSignup}>Signup</button>
+          <button style={styles.button} onClick={()=>{navigate('/signup')}}>Signup</button>
         </div>
       </div>
     </div>
@@ -143,4 +118,4 @@ const styles = {
 
 };
 
-export default App;
+export default SignIn;
