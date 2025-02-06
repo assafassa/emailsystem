@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { useUser } from './UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { loginUser } = useUser();
+  const { loginUser,userEmail } = useUser();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -21,7 +23,8 @@ function App() {
         console.log('Signin successful:', data);
         // Handle successful signup (e.g., navigate to another page)
         loginUser(email); 
-        window.location.href = '/home';
+        
+        
       } else {
         console.error('Signin failed:', data.result);
         // Handle failure (e.g., show error message)
@@ -31,6 +34,12 @@ function App() {
       // Handle network or other errors
     }
   };
+  useEffect(() => {
+      if (userEmail) {
+       
+        navigate('/home'); 
+      }
+    }, [userEmail]);
 
   const handleSignup = async () => {
     try {
