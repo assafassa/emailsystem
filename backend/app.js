@@ -7,6 +7,8 @@ app.use(cors());
 const dbURI = "mongodb+srv://assaf141:1989Taylor@cluster0.cddb0.mongodb.net/emailsystem?retryWrites=true&w=majority&appName=Cluster0";
 const SignupController = require('./controllers/signupcontroller');
 const SigninController = require('./controllers/signincontroller');
+const PostMessageController = require('./controllers/postmessage'); 
+const GetMessageController = require('./controllers/getmessages'); 
 
 // Connect to MongoDB and start server if successful
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -26,3 +28,5 @@ app.post('/signup' ,SignupController.signup_post)
 
 
 app.post('/signin' ,SigninController.signin_post)
+app.post('/postmessage', PostMessageController.post_message);
+app.get('/getmessages', GetMessageController.get_messages);
