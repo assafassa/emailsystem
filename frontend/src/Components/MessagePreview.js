@@ -5,7 +5,7 @@ function MessagePreview({sender, subject, snippet }) {
     <li style={styles.messageItem}>
       <span style={styles.messageSender}>{sender}</span>  
       <span style={styles.messageTitle}>{subject}</span>
-      <span style={styles.messageSnippet}>{snippet}</span>
+      <span style={styles.messageSnippet}>{snippet}...</span>
     </li>
   );
 }

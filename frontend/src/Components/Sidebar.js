@@ -14,7 +14,7 @@ function Sidebar({messages}) {
             <MessagePreview
               key={message.id}
               subject={message.subject}
-              snippet={message.snippet}
+              snippet={message.textmessage.slice(0, 30)}
               sender={message.sender}
             />
           ))}
