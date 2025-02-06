@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar'
 import MessageView from './Components/MessageView';
 import NewMessageModal from './Modals/NewMassegeModal';
+import { io } from 'socket.io-client';
 
 function Home() {
   const navigate = useNavigate();
