@@ -72,9 +72,26 @@ function Home() {
       "fromAddress": "jane.smith@example.com",
       "toAddress": "assaf@gmail.com",
       "createdAt": "2025-02-06T12:00:00Z"
-    }]);
+    },
+    {
+      "_id": "67a49fc71394c557cdd1e736",
+      "title": "Meeting Reminder",
+      "body": "This is a reminder about the meeting scheduled for tomorrow at 10 AM.",
+      "fromAddress": "assaf@gmail.com",
+      "toAddress": "jane.smith@example.com",
+      "createdAt": "2025-02-06T12:30:00Z"
+    },
+    {
+      "_id": "67a49fc91394c557cdd1e738",
+      "title": "Meeting Reminder",
+      "body": "This is a reminder about the meeting scheduled for tomorrow at 10 AM.",
+      "fromAddress": "assaf@gmail.com",
+      "toAddress": "jane.smith@example.com",
+      "createdAt": "2025-02-06T13:00:00Z"
+    }
+  ]);
 
-
+  const [currentMessage,setCurrentMessage]=useState("67a49f9c1394c557cdd1e726")
 
 
   const handleLogout = () => {
@@ -115,9 +132,13 @@ function Home() {
     <div>
       <Navbar/>
       <div style={{display: 'flex', flexDirection: 'row',}}>
-        <Sidebar messages={messages}/>
+        <Sidebar messages={messages}
+        setCurrentMessage={setCurrentMessage}
+        currentMessage={currentMessage}
+        />
         <MessageView
-        message={messages[0]}
+        message={messages.filter((message)=>message._id==currentMessage)[0]}
+        
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import MessagePreview from './MessagePreview'; // Import the MessagePreview component
 
-function Sidebar({messages}) {
+function Sidebar({messages,setCurrentMessage,currentMessage}) {
   // Sample messages for the preview
   
 
@@ -13,9 +13,12 @@ function Sidebar({messages}) {
           {messages.map((message) => (
             <MessagePreview
               key={message._id}
+              id={message._id}
               subject={message.title}
               snippet={message.body.slice(0, 30)}
               sender={message.fromAddress}
+              setCurrentMessage={setCurrentMessage}
+              currentMessage={currentMessage}
             />
           ))}
         </ul>
