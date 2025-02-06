@@ -39,20 +39,20 @@ This project is a simple email mockup application built with a Node.js backend a
 
 ---
 
+
 ## Next Steps
 
 ### 7. Implement Message Retrieval Trigger
 - Figure out a way to **automatically retrieve received messages** (possibly using WebSockets).
 
 ### 8. Additional Features to Complete
-- **Saved drafts**: Implement draft-saving functionality.
-- **Sorting sidebar messages**: Add buttons to filter messages by **inbox, outbox, and drafts**.
-
-### 9. Sign-Up Component
+- **Sorting sidebar messages**: Add buttons to filter messages by **inbox, outbox, and drafts**. i did it for some reason it doesnt sort them properly with draft being undefined enven when it is defined. 
 - Create a dedicated **sign-up component** separate from the sign-in page.
+eventhough you can sign in with just email and password, 
 
-### 10. Security Enhancements
 - **Hash user passwords** for secure storage.
 - **Implement JWT authentication** to ensure users can only access their messages.
 
 ---
+
+## test user to sign-in : email: assaf@gmail.com, password:123456
