@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 app.use(express.json());  // Middleware to parse JSON request bodies
-
+app.use(cors());
 const dbURI = "mongodb+srv://assaf141:1989Taylor@cluster0.cddb0.mongodb.net/emailsystem?retryWrites=true&w=majority&appName=Cluster0";
 const SignupController = require('./controllers/signupcontroller');
 const SigninController = require('./controllers/signincontroller');

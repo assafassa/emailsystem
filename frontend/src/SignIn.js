@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useUser } from './UserContext';
 
 function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { loginUser } = useUser();
 
   const handleLogin = async () => {
     try {
@@ -18,6 +20,8 @@ function App() {
       if (response.ok) {
         console.log('Signin successful:', data);
         // Handle successful signup (e.g., navigate to another page)
+        loginUser(email); 
+        window.location.href = '/home';
       } else {
         console.error('Signin failed:', data.result);
         // Handle failure (e.g., show error message)
@@ -41,7 +45,10 @@ function App() {
       const data = await response.json();
       if (response.ok) {
         console.log('Signup successful:', data);
-        // Handle successful signup (e.g., navigate to another page)
+        // Handle successful signup \
+        loginUser(email); // Update the context with the logged-in email
+        // Redirect to home page after successful sign-in
+        window.location.href = '/home';
       } else {
         console.error('Signup failed:', data.result);
         // Handle failure (e.g., show error message)
