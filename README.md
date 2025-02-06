@@ -46,8 +46,7 @@ This project is a simple email mockup application built with a Node.js backend a
 
 ### 7. Additional Features to Complete
 
-- Create a dedicated **sign-up component** separate from the sign-in page.
-eventhough you can sign in with just email and password, 
+
 
 - **Hash user passwords** for secure storage.
 - **Implement JWT authentication** to ensure users can only access their messages.
