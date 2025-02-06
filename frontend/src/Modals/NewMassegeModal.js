@@ -4,16 +4,28 @@ function NewMessageModal({ isOpen, setIsOpen, sendMessage }) {
   const [toAddress, setToAddress] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
+  const[error,seterror]=useState(null)
 
   // Close modal when clicking the cancel button or outside the modal
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    sendMessage({ toAddress, subject, body,draft:false });
-    closeModal();
+    try{
+      let sent=await sendMessage({ toAddress, subject, body,draft:false });
+    }
+    catch(err){
+      seterror(error)
+      setTimeout(() => {
+        seterror(null)
+      }, 1500);
+    }
+    if (!error){
+      closeModal();
+    }
+    
   };
   const handleDraft = (e) => {
     e.preventDefault();
@@ -74,6 +86,7 @@ function NewMessageModal({ isOpen, setIsOpen, sendMessage }) {
 
           
         </form>
+        {error&&(<div>{error}</div>)}
       </div>
     </div>
   );

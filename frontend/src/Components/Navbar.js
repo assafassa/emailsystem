@@ -5,7 +5,7 @@ import { useUser } from '../UserContext';
 function Navbar({setIsModalOpen,setSortBy,sortby}) {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  const { clearUser,userEmail } = useUser();
+  const { clearUser,userEmail,firstName,lastName } = useUser();
 
   const handleLogout = () => {
     clearUser(); // Clear user data on logout
@@ -66,7 +66,7 @@ function Navbar({setIsModalOpen,setSortBy,sortby}) {
       </div>
 
       <button onClick={() => setIsModalOpen(true)} style={styles.navButton}>New Email</button>
-      <div>{userEmail}</div>
+      <div>{firstName} {lastName}</div>
       <button onClick={handleLogout} style={styles.navButton}>Logout</button>
     </nav>
   );

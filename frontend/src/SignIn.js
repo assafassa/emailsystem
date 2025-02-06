@@ -7,6 +7,7 @@ function SignIn() {
   const [password, setPassword] = useState('');
   const { loginUser,userEmail } = useUser();
   const navigate = useNavigate();
+  const [error,seterror]=useState(null)
 
   const handleLogin = async () => {
     try {
@@ -28,10 +29,20 @@ function SignIn() {
       } else {
         console.error('Signin failed:', data.result);
         // Handle failure (e.g., show error message)
+        seterror('Signin failed:'+ data.result)
+        setTimeout(() => {
+          seterror(null)
+        }, 1500);
+        
       }
+      
     } catch (error) {
       console.error('Error during signin:', error);
       // Handle network or other errors
+      seterror(error)
+      setTimeout(() => {
+        seterror(null)
+      }, 1500);
     }
   };
   useEffect(() => {
@@ -66,6 +77,7 @@ function SignIn() {
           <button style={styles.button} onClick={handleLogin}>Login</button>
           <button style={styles.button} onClick={()=>{navigate('/signup')}}>Signup</button>
         </div>
+        {error&&(<div>{error}</div>)}
       </div>
     </div>
   );

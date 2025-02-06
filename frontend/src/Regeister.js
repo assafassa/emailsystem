@@ -10,10 +10,17 @@ function SignUp() {
   const [repeatPassword, setRepeatPassword] = useState('');
   const { loginUser, userEmail } = useUser();
   const navigate = useNavigate();
+  const [error,seterror]=useState(null)
 
   const handleSignup = async () => {
     if (password !== repeatPassword) {
       console.error('Passwords do not match');
+      seterror('Passwords do not match')
+      return; // Exit if passwords do not match
+    }
+    if(lastName.length<2 | firstName.length| email.length<3){
+      console.error('Information is missing');
+      seterror('Information is missing')
       return; // Exit if passwords do not match
     }
 
@@ -39,6 +46,10 @@ function SignUp() {
       }
     } catch (error) {
       console.error('Error during signup:', error);
+      seterror(error)
+      setTimeout(() => {
+        seterror(null)
+      }, 1500);
       // Handle network or other errors
     }
   };
@@ -98,6 +109,7 @@ function SignUp() {
         <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', width: '80%', paddingLeft: '25px' }}>
           <button style={styles.button} onClick={handleSignup}>Sign Up</button>
         </div>
+        {error&&(<div>{error}</div>)}
       </div>
     </div>
   );
